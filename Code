@@ -1,0 +1,469 @@
+from OpenGL.GL import *
+from OpenGL. GLUT import *
+from OpenGL. GLU import *
+import numpy as np
+from math import *
+
+def draw_axies():
+    glBegin(GL_LINES)
+    glColor3f(1,0,0)
+    glVertex(0,0,0)
+    glVertex(15, 0, 0)
+
+    glColor3f(0, 1, 0)
+    glVertex(0, 0, 0)
+    glVertex(0, 15, 0)
+
+    glColor3f(0, 0, 1)
+    glVertex(0, 0, 0)
+    glVertex(0, 0, 15)
+
+    glEnd()
+
+def stone():
+    glColor3f(.4, .4, .3)
+    glRotate(90, 0, 1, 0)
+    glTranslate(12, 1 + ((-2.5 * .25) - .57) + 2 * .7, (-15.3 * .8) / 2)
+    glScale(.3, .2, .2)
+    glutSolidDodecahedron()
+
+
+
+def pavement():
+    glColor3f(.7, .7, .7)
+    glRotate(90, 0, 1, 0)
+    glTranslate(10,0 , (-18.3 * .8) / 2)
+    glScale(3, .7, 2)
+    glutSolidCube(2)
+    glLineWidth(2.5)
+    glColor3f(0, 0, 0)
+    glutWireCube(2)
+
+def cylinder():
+    glColor3f(.3,.21,0.1)
+    glRotate(90, 0, 1, 0)
+    glTranslate(10,9+((-2.5*.25)-.57)+2*.7,(-18.3 * .8) / 2)  #y=hcylinder+yroad+ypavement=10.205
+    glRotate(90,1,0,0)
+    glutSolidCylinder(1,9,20,15)
+def sphere():
+
+    glColor3f(.1, .3, 0)
+    glRotate(90, 0, 1, 0)
+    glTranslate(10,9.205 + 2 * .7, (-18.3 * .8) / 2)
+    glutSolidSphere(2.8, 20, 15)
+
+
+def arrowkeys(key,x,y):
+    global car_z
+    if key== GLUT_KEY_LEFT:
+        car_z -=.5
+    elif key==GLUT_KEY_RIGHT:
+        car_z +=.5
+
+    display()
+
+
+
+def myInit():
+    glMatrixMode(GL_PROJECTION)
+    glLoadIdentity()
+    gluPerspective(90,1,.1,60)
+    gluLookAt(-6,5,20,
+              0,0,0,
+               0,1,0)
+    glClearColor(.32, .52, 1,1)
+    glClearColor(.1, .1, .2, 1)
+    glClear(GL_COLOR_BUFFER_BIT  | GL_DEPTH_BUFFER_BIT)
+    glEnable(GL_DEPTH_TEST)
+
+
+
+
+angle=0
+x=0
+forward=True
+car_z = 0
+
+def display():
+    global car_z
+    global angle
+    global x
+    global forward
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+
+    glMatrixMode(GL_MODELVIEW)
+    glLoadIdentity()
+    #draw_axies()
+
+
+    # ground
+
+    glLoadIdentity()
+    glColor3f(.2, .5, 0)
+    glRotate(90,0,1,0)
+    glTranslate(0,-2.5*.25-.57,((-18.3*.8)/2)-4-98)
+    glScale(100, 0, 20)
+    glutSolidCube(10)
+
+    glLoadIdentity()
+    glColor3f(.1, .2, .4)
+    glRotate(90,0,1,0)
+    glTranslate(0, -2.5*.25-.57, ((18.3 * .8) / 2) + 4 + 98)
+    glScale(100, 0, 20)
+    glutSolidCube(10)
+
+    # road
+
+    glLoadIdentity()
+    glColor3f(.15,.15,.15)
+    glRotate(90,0,1,0)
+    glTranslate(0,-3.3*.25-.57,0)
+    glScale(5, 0, 1)
+    glutSolidCube(15)
+
+    glLoadIdentity()
+    glColor3f(1, 1, 1)
+    glRotate(90, 0, 1, 0)
+    glTranslate(0, -3.3* .25 - .57, 0)
+    glScale(1, .01, .3)
+    glutSolidCube(5)
+
+    glLoadIdentity()
+    glColor3f(1, 1, 1)
+    glRotate(90, 0, 1, 0)
+    glTranslate(7, -3.3 * .25 - .55, 0)
+    glScale(1, .01, .3)
+    glutSolidCube(5)
+
+    glLoadIdentity()
+    glColor3f(1, 1, 1)
+    glRotate(90, 0, 1, 0)
+    glTranslate(14, -3.3 * .25 - .55, 0)
+    glScale(1, .01, .3)
+    glutSolidCube(5)
+
+    glLoadIdentity()
+    glColor3f(1, 1, 1)
+    glRotate(90, 0, 1, 0)
+    glTranslate(21, -3.3 * .25 - .55, 0)
+    glScale(1, .01, .3)
+    glutSolidCube(5)
+
+    glLoadIdentity()
+    glColor3f(1, 1, 1)
+    glRotate(90, 0, 1, 0)
+    glTranslate(-7, -3.3 * .25 - .55, 0)
+    glScale(1, .01, .3)
+    glutSolidCube(5)
+
+    glLoadIdentity()
+    glColor3f(1, 1, 1)
+    glRotate(90, 0, 1, 0)
+    glTranslate(-14, -3.3 * .25 - .55, 0)
+    glScale(1, .01, .3)
+    glutSolidCube(5)
+
+    glLoadIdentity()
+    glColor3f(1, 1, 1)
+    glRotate(90, 0, 1, 0)
+    glTranslate(-21, -3.3 * .25 - .55, 0)
+    glScale(1, .01, .3)
+    glutSolidCube(5)
+
+    glLoadIdentity()
+    glColor3f(1, 1, 1)
+    glRotate(90, 0, 1, 0)
+    glTranslate(-28, -3.3 * .25 - .55, 0)
+    glScale(1, .01, .3)
+    glutSolidCube(5)
+
+    for i in range(0,100,6):
+        glLoadIdentity()
+        glTranslate(0, 0, 0-i)
+        pavement()
+
+        glLoadIdentity()
+        glTranslate(0, 0, 0-i)
+        cylinder()
+
+        glLoadIdentity()
+        glTranslate(0, 0, 0-i)
+        sphere()
+
+        glLoadIdentity()
+        glTranslate(0, 0, 0-i)
+        stone()
+
+        glLoadIdentity()
+        glTranslate(0, 0, -1-i)
+        stone()
+
+        glLoadIdentity()
+        glTranslate(-1.3, 0, -1-i)
+        stone()
+
+        glLoadIdentity()
+        glTranslate(.5, 0,-2-i )
+        stone()
+
+        glLoadIdentity()
+        glTranslate(-.3, 0, -3-i)
+        stone()
+
+    for i in range(6, 100, 6):
+            glLoadIdentity()
+            glTranslate( 0, 0, 0+i)
+            pavement()
+            glLoadIdentity()
+            glTranslate(0 , 0, 0+i)
+            cylinder()
+            glLoadIdentity()
+            glTranslate(0 , 0, 0+i)
+            sphere()
+
+            glLoadIdentity()
+            glTranslate(0 , 0, 0+i)
+            stone()
+
+            glLoadIdentity()
+            glTranslate(0, 0, -1 + i)
+            stone()
+
+            glLoadIdentity()
+            glTranslate(-1.3, 0, -1 + i)
+            stone()
+
+            glLoadIdentity()
+            glTranslate(.5, 0, -2 + i)
+            stone()
+
+            glLoadIdentity()
+            glTranslate(-.3, 0, -3 + i)
+            stone()
+    for i in range(0, 100, 6):
+        glLoadIdentity()
+        glTranslate(15*.8+3.1 , 0, 0-i)
+        pavement()
+        glLoadIdentity()
+        glTranslate(15*.8+4 , 0,0-i )
+        cylinder()
+        glLoadIdentity()
+        glTranslate(15*.8+4, 0, 0-i)
+        sphere()
+
+        glLoadIdentity()
+        glTranslate(15*.8+2, 0, 0 - i)
+        stone()
+
+        glLoadIdentity()
+        glTranslate(15*.8+2, 0, -1-i)
+        stone()
+
+        glLoadIdentity()
+        glTranslate(1.3+2+15*8, 0, -1-i)
+        stone()
+
+        glLoadIdentity()
+        glTranslate( -.5+2+15*.8, 0,-2-i)
+        stone()
+
+        glLoadIdentity()
+        glTranslate(+.3+2+15*.8, 0, -3-i)
+        stone()
+
+    for i in range(6, 100, 6):
+        glLoadIdentity()
+        glTranslate(15 * .8 + 3.1 , 0,0 +i)
+        pavement()
+        glLoadIdentity()
+        glTranslate(15 * .8 + 4, 0, 0+i)
+        cylinder()
+        glLoadIdentity()
+        glTranslate(15 * .8 + 4, 0, 0+i)
+        sphere()
+
+        glLoadIdentity()
+        glTranslate(15 * .8 + 2, 0, 0+i)
+        stone()
+
+        glLoadIdentity()
+        glTranslate(15 * .8 + 2, 0, -1+i)
+        stone()
+
+        glLoadIdentity()
+        glTranslate(1.3 + 2 + 15 * .8, 0, -1+i)
+        stone()
+
+        glLoadIdentity()
+        glTranslate(-.5 + 2 + 15 * .8, 0, -2+i)
+        stone()
+
+        glLoadIdentity()
+        glTranslate(+.3 + 2 + 15 * .8, 0,-3+i )
+        stone()
+
+    #moon
+
+
+
+    glLoadIdentity()
+    glColor3f(1, 1, .6)
+    glRotate(90, 0, 1, 0)
+    glTranslate(-7,11,-2)
+    glScale(1,1,1)
+    glutSolidSphere(1.5,20,20)
+
+    glLoadIdentity()
+    glColor3f(.1, .1, .2)
+    glRotate(90, 0, 1, 0)
+    glTranslate(-7.5, 11, -3)
+    glScale(2, 1, 1)
+    glutSolidSphere(1.5, 20, 20)
+
+
+
+
+    #car
+    glLoadIdentity()
+    glColor3f(0,0,0)
+    glRotate(90, 0, 1, 0)
+    glTranslate(x,.25,car_z)
+    glScale(1, .25, .5)
+    glutSolidCube(5)
+
+    glLineWidth(2.3)
+    glColor3f(0.3,0.3,0.3)
+    glutWireCube(5)
+
+    glLoadIdentity()
+    glRotate(90, 0, 1, 0)
+    glTranslate(x-.5,5*.25+.25,car_z)
+    glScale(.6,.25,.5)
+    glutWireCube(5)
+    glColor3f(0,0,0)
+    glutSolidCube(5)
+
+
+#cycles
+    glLoadIdentity()
+    glColor3f(0,0,0)
+    glRotate(90, 0, 1, 0)
+    glTranslate(2+x,-2.5*.25,2.5*.5+car_z)
+    glRotate(angle,0,0,1)
+    glutSolidTorus(0.25,.55,15,10)
+
+    glLoadIdentity()
+    glColor3f(0, 0, 0)
+    glRotate(90, 0, 1, 0)
+    glTranslate(-2+x, -2.5 * .25, 2.5 * .5+car_z)
+    glRotate(angle, 0, 0, 1)
+    glutSolidTorus(0.25, .55, 15, 10)
+
+
+
+    glLoadIdentity()
+    glColor3f(0, 0, 0)
+    glRotate(90, 0, 1, 0)
+    glTranslate(2+x, -2.5 * .25,- 2.5 * .5+car_z)
+    glRotate(angle,0,0,1)
+    glutSolidTorus(0.25, .55, 15, 10)
+
+
+
+    glLoadIdentity()
+    glColor3f(0, 0, 0)
+    glRotate(90, 0, 1, 0)
+    glTranslate(-2+x, -2.5 * .25,- 2.5 * .5+car_z)
+    glRotate(angle, 0, 0, 1)
+    glutSolidTorus(0.25, .55, 15, 10)
+
+
+    glLoadIdentity()
+    glColor3f(0, 0, 0)
+    glRotate(90, 0, 1, 0)
+    glTranslate(-2.5 + x, -2.5 * .25, - 2.5 * .5+car_z)
+    glRotate(angle, 0, 0, 1)
+    glutSolidTorus(0, .25, 15, 10)
+
+
+#Inner tube "إطار داخلي في عجلة السياره"
+
+    glLoadIdentity()
+    glColor3f(0.3, 0.3, .3)
+    glRotate(90, 0, 1, 0)
+    glTranslate(2 + x, -2.5 * .25,  2.5 * .5+car_z)
+    glutSolidTorus(0.16, .25, 15, 10)
+
+    glLoadIdentity()
+    glColor3f(0.3, 0.3, .3)
+    glRotate(90, 0, 1, 0)
+    glTranslate(-2 + x, -2.5 * .25, 2.5 * .5+car_z)
+    glutSolidTorus(0.16, .25, 15, 10)
+
+    glLoadIdentity()
+    glColor3f(0.3, 0.3, .3)
+    glRotate(90, 0, 1, 0)
+    glTranslate(2 + x, -2.5 * .25, - 2.5 * .5+car_z)
+    glutSolidTorus(0.16, .25, 15, 10)
+
+    glLoadIdentity()
+    glColor3f(0.3, 0.3, .3)
+    glRotate(90, 0, 1, 0)
+    glTranslate(-2 + x, -2.5 * .25, -2.5 * .5+car_z)
+    glutSolidTorus(0.16, .25, 15, 10)
+
+# Torches
+    glLoadIdentity()
+    glColor3f(1,1,0)
+    glRotate(90, 0, 1, 0)
+    glTranslate(2.5+x,0,.5+car_z)
+    glutSolidSphere(.35,12,12)
+
+    glLoadIdentity()
+    glColor3f(1, 1, 0)
+    glRotate(90, 0, 1, 0)
+    glTranslate(2.5+x, 0, -.7+car_z)
+    glutSolidSphere(.35, 12, 12)
+
+
+#########
+    glLoadIdentity()
+    glColor3f(0,0,0)
+    glRotate(90, 0, 1, 0)
+    glRotate(-angle,1,0,0)
+    glTranslate(0-x,0,0)
+    glutWireSphere(1.5,15,15)
+
+
+
+
+    if forward:
+      angle-=2
+      x+=.12
+      if x> 13:
+        forward = False
+
+    else:
+     angle+=2
+     x-=.12
+     if x< -20:
+        forward = True
+
+
+    glutSwapBuffers()
+
+
+
+
+
+
+
+glutInit()
+glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB)
+glutInitWindowSize(500, 500)
+glutCreateWindow(b"Mving car")
+glutDisplayFunc(display)
+myInit()
+glutIdleFunc(display)
+glutSpecialFunc(arrowkeys)
+glutMainLoop()
